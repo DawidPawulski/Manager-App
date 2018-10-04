@@ -1,0 +1,37 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Player {{ player.name }}
+{% endblock %}
+
+{% block content %}
+    {% if player is not null %}
+    <h3>Player {{ player.name }}:</h3>
+    General information about the player:
+    <ul>
+        <li>Club: {{ player.club }}</li>
+        <li>Nationality: {{ player.nationality }}</li>
+        <li>Position: {{ player.get_position_display }}</li>
+        <li>Height: {{ player.height }} cm</li>
+        <li>Date of birth: {{ player.date_of_birth }}</li>
+        <li>Injured? {{ player.injury }}</li>
+
+    </ul>
+
+
+
+    Statistics:
+    <ul>
+            <li>Appearances: {{ appearance.match_played|default:'0' }}({{ bench.matches_from_the_bench|default:'0' }})</li>
+            <li>Goals: {{ goals.goals|default:"0" }}</li>
+            <li>Assist: {{ assists.assists|default:'0' }}</li>
+            <li>Yellow Cards: {{ yellow_cards.yellow_cards|default:'0' }}</li>
+            <li>Red Cards: {{ red_cards.red_cards|default:'0' }}</li>
+            <li>Man of the match: {{ motm.motm|default:'0' }}</li>
+
+    </ul>
+    {% else %}
+            No information about the player!
+
+    {% endif %}
+{% endblock %}

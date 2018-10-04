@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Squad
+{% endblock %}
+
+{% block content %}
+    <h3>{{ club.club_name }} squad:</h3>
+
+    <ul>
+        {% for man in players %}
+            <li><a href="{% url 'player-details' pk=man.pk %}">{{ man.name }}</a>
+                Position: {{ man.get_position_display }}<br>
+            Appearances: {{ appearance.match_played|default:'0' }}({{ bench.matches_from_the_bench|default:'0' }}),
+                Goals: {{ goals.goals|default:"0" }}, Assist: {{ assists.assists|default:'0' }},
+                Yellow Cards: {{ yellow_cards.yellow_cards|default:'0' }}, Red Cards: {{ red_cards.red_cards|default:'0' }},
+                Man of the match: {{ motm.motm|default:'0' }}
+
+            </li>
+        {% empty %}
+            No players in the club!
+
+        {% endfor %}
+    </ul>
+
+{% endblock %}

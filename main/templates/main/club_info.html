@@ -1,0 +1,26 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Clubs details
+{% endblock %}
+
+{% block content %}
+    <h3>Information about the club: {{ club_details.club_name }}</h3>
+    <h4>Manager
+        {% if manager.exists %}
+            {% for man in manager %}
+                {{ man }}
+            {% endfor %}
+        {% else %}
+            No registered manager
+        {% endif %}
+    </h4>
+    <ul>
+        <li>Name: {{ club_details.club_name }}</li>
+        <li>City: {{ club_details.city }}</li>
+        <li>Stadium: {{ club_details.stadium_name }}</li>
+        <li>League: {{ club_details.league }}</li>
+    </ul>
+    <a href="{% url 'schedule-view' pk=club_details.pk %}">Schedule</a>
+
+{% endblock %}

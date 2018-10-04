@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Inbox | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <h2>Inbox</h2>
+    <h4>Subject: {{ messages.subject }}</h4><br>
+    <span><b>Message from:</b> {{ messages.sender }}</span><br>
+    <span><b>Sended:</b> {{ messages.date_sent }}</span><br>
+    <div><b>Content:</b><br>
+        {{ messages.content }}
+    </div><br><br>
+    <a href="{% url 'inbox-list' %}">Back to inbox</a><br><br>
+{% endblock %}

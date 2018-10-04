@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Clubs list
+{% endblock %}
+
+{% block content %}
+
+    <form method="post" action="">
+    {% csrf_token %}
+        {{ form.as_p }}
+
+    <input type="submit" value="Search">
+
+    </form>
+
+    <h3>Club list:</h3>
+    <ul>
+        {% for club in results %}
+            <li><a href="{% url 'club-info' pk=club.pk %}">{{ club.club_name }}</a></li>
+        {% empty %}
+            No information about the clubs
+
+        {% endfor %}
+    </ul>
+
+{% endblock %}

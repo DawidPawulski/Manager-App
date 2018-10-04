@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Użytkownicy
+{% endblock %}
+
+{% block content %}
+    <h2>Users:</h2>
+    <ul>
+        {% for object in object_list %}
+            <li><a href="{% url 'user-details' pk=object.pk %}">{{ object.username }}, {{ object.last_name }}</a>
+            {% if perms.main.delete_user %}
+                <h5><a href="{% url 'user_delete' pk=object.pk %}">Delete</a></h5>
+            {% endif %}
+            {% if perms.main.update_user %}
+                <h5><a href="{% url 'reset-password' user_id=object.pk %}">Forgot password</a></h5>
+            {% endif %}
+
+        {% empty %}
+            No users!
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    User Profile
+{% endblock %}
+
+{% block content %}
+
+    <h3>User {{ manager.my_user.first_name }} {{ manager.my_user.last_name }}:</h3>
+    <ul>
+        <li>Club: {{ manager.club }}</li>
+        <li>Username: {{ manager.my_user.username }}</li>
+        <li>Email: {{ manager.my_user.email }}</li>
+    </ul>
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Leagues list
+{% endblock %}
+
+{% block content %}
+
+    <h3>Leagues list:</h3>
+    <ul>
+        {% for league in leagues %}
+            <li><a href="{% url 'league-details' pk=league.pk %}">{{ league }}</a></li>
+        {% empty %}
+            No leagues
+
+        {% endfor %}
+    </ul>
+
+{% endblock %}

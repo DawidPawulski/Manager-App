@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Zaloguj się
+{% endblock %}
+
+{% block content %}
+    {% if msg %}
+        <h2>{{ msg }}</h2>
+
+    {% else %}
+        <h2>Zaloguj się</h2>
+
+        <form action="{% url 'login_view' %}" method="post">
+            {% csrf_token %}
+            {{ form }}
+            <input type="submit" value="Zaloguj">
+        </form>
+    {% endif %}
+{% endblock %}

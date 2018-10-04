@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Inbox | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    <h2>Inbox</h2>
+
+    <ul>
+        {% for mess in messages %}
+            <li><a href="{% url 'inbox-detail' pk=mess.pk %}">{{ mess.subject }}</a></li>
+        {% empty %}
+            No messages
+
+        {% endfor %}
+    </ul>
+{% endblock %}

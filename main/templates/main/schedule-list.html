@@ -1,0 +1,38 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Schedule
+{% endblock %}
+
+{% block content %}
+    <h3>Schedule for {{ club.club_name }}:</h3>
+    <ul>
+        {% for match in matches %}
+            <li>
+                Date: {{ match.date }}<br>
+                League: {{ club.league }}<br>
+                <a href="{% url 'match-view' pk=match.pk %}">{{ match.home_team.get }} - {{ match.away_team.get }}</a><br>
+            Score:
+                {% if match.home_team_score == 0 %}
+                    0
+                {% elif match.home_team_score == None %}
+                    -
+                {% else %}
+                    {{ match.home_team_score }}
+                {% endif %}
+                :
+                {% if match.away_team_score == 0 %}
+                    0
+                {% elif match.away_team_score == None %}
+                    -
+                {% else %}
+                    {{ match.away_team_score }}
+                {% endif %}
+            </li><br>
+        {% empty %}
+            No matches planned
+
+        {% endfor %}
+    </ul>
+
+{% endblock %}

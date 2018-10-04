@@ -1,0 +1,23 @@
+{% extends 'main/base.html' %}
+
+{% block content %}
+
+    <form method="post" action="">
+    {% csrf_token %}
+        {{ form.as_p }}
+
+    <input type="submit" value="Search">
+
+    </form>
+
+    <h2>Results:</h2>
+        <ul>
+        {% for item in results %}
+            <li><a href="{% url 'club-info' pk=item.pk %}">{{ item }}</a></li>
+        {% empty %}
+            No results!
+        {% endfor %}
+
+        </ul>
+
+{% endblock %}

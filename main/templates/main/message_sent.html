@@ -1,0 +1,14 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Send Message | {{ block.super }}
+{% endblock %}
+
+{% block content %}
+    Your message was sent!
+
+
+    <h6>You will return to previous page in 3 seconds</h6>
+    <meta http-equiv="refresh" content="3;url=http://127.0.0.1:8000/compose_message/">
+{% endblock %}
+
