@@ -38,8 +38,11 @@ urlpatterns = [
     path('user/<int:pk>', UserDetailView.as_view(), name='user-details'),
     path('clubs/<int:pk>/schedule', ScheduleView.as_view(), name='schedule-view'),
     path('schedule/<int:pk>', MatchView.as_view(), name='match-view'),
+    path('schedule/<int:pk>/edit', MatchUpdateView.as_view(), name='match-edit-view'),
     path('compose_message/', ComposeMessageView.as_view(), name="compose-message"),
     path('message_sent/', SentMessageView.as_view(), name="sent-message"),
     path('inbox', InboxListView.as_view(), name='inbox-list'),
     path('inbox/<int:pk>', InboxDetailView.as_view(), name='inbox-detail'),
+    path('inbox/<int:pk>/delete', MessageDeleteView.as_view(), name='message-delete'),
+    path('clubs/<int:pk>/squad/shirts', PlayersShirtNumberUpdateView.as_view(), name='shirt-update'),
 ]

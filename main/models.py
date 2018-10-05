@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.models import UserManager
 
 # Create your models here.
+from django.urls import reverse
 
 POSITION_CHOICES = [
     (0, 'Goalkeeper'),
@@ -54,6 +55,7 @@ class Players(models.Model):
     nationality = models.CharField(max_length=64)
     height = models.IntegerField()
     date_of_birth = models.DateField()
+    shirt_number = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -85,6 +87,22 @@ class Matches(models.Model):
     away_team_score = models.IntegerField(null=True, blank=True)
     date = models.DateField()
     league = models.ForeignKey(Leagues, on_delete=models.CASCADE)
+    possession_home_team = models.FloatField()
+    possession_away_team = models.FloatField()
+    shots_on_target_home_team = models.IntegerField()
+    shots_on_target_away_team = models.IntegerField()
+    all_shots_home_team = models.IntegerField()
+    all_shots_away_team = models.IntegerField()
+    corners_home_team = models.IntegerField()
+    corners_away_team = models.IntegerField()
+    offsides_home_team = models.IntegerField()
+    offsides_away_team = models.IntegerField()
+    yellow_cards_home_team = models.IntegerField()
+    yellow_cards_away_team = models.IntegerField()
+    red_cards_home_team = models.IntegerField()
+    red_cards_away_team = models.IntegerField()
+    fouls_conceded_home_team = models.IntegerField()
+    fouls_conceded_away_team = models.IntegerField()
 
     def __str__(self):
         return "{} {}".format(self.home_team, self.away_team)
@@ -92,6 +110,11 @@ class Matches(models.Model):
     class Meta:
         verbose_name = "match"
         verbose_name_plural = "matches"
+
+    def get_absolute_url(self):
+        return reverse('match-view', kwargs={'pk': self.pk})
+
+
 
 
 class Goals(models.Model):
@@ -134,11 +157,6 @@ class BenchPlayers(models.Model):
     matches_from_the_bench = models.IntegerField()
     player = models.ManyToManyField(Players)
     match = models.ManyToManyField(Matches)
-
-
-class PlayerShirtNumber(models.Model):
-    number = models.IntegerField()
-    player = models.OneToOneField(Players, on_delete=models.CASCADE)
 
 
 class Message(models.Model):

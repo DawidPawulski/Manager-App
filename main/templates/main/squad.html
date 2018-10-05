@@ -9,7 +9,9 @@
 
     <ul>
         {% for man in players %}
-            <li><a href="{% url 'player-details' pk=man.pk %}">{{ man.name }}</a>
+            <li>
+                #{{ man.shirt_number }}
+                    <a href="{% url 'player-details' pk=man.pk %}">{{ man.name }}</a>
                 Position: {{ man.get_position_display }}<br>
             Appearances: {{ appearance.match_played|default:'0' }}({{ bench.matches_from_the_bench|default:'0' }}),
                 Goals: {{ goals.goals|default:"0" }}, Assist: {{ assists.assists|default:'0' }},
@@ -22,5 +24,10 @@
 
         {% endfor %}
     </ul>
+    <br><br>
+    <a href="{% url 'shirt-update' pk=club.pk %}">Edit players shirts numbers</a>
+
+    <br><br>
+
 
 {% endblock %}

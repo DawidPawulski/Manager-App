@@ -4,14 +4,14 @@
     <head><meta charset="utf-8"></head>
     <title>
         {% block title %}
-            Football Manager
+            ManagerApp
         {% endblock %}
     </title>
     <body bgcolor="{{ bgcolor }}">
         <div>
             <a href="{% url 'index' %}">Strona główna</a> |
             <a href="{% url 'compose-message' %}">Send message</a> |
-            <a href="{% url 'inbox-list' %}">Inbox</a> | 
+            <a href="{% url 'inbox-list' %}">Inbox</a> |
             <a href="{% url 'user-list' %}">Users List</a> |
             <a href="{% url 'player_search' %}">Search Player</a> |
             <a href="{% url 'club_search' %}">Search Club</a> |
@@ -27,7 +27,7 @@
 
         </div>
 
-        <h1>Football Manager</h1>
+        <h1>ManagerApp</h1>
 
         {% block content %}
             [Brak treści]

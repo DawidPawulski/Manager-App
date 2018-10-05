@@ -12,5 +12,6 @@
     <div><b>Content:</b><br>
         {{ messages.content }}
     </div><br><br>
+    <a href="{% url 'message-delete' pk=messages.pk %}">Delete this message?</a><br><br>
     <a href="{% url 'inbox-list' %}">Back to inbox</a><br><br>
 {% endblock %}

@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model, login, logout
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.template import context
 from django.template.response import TemplateResponse
 from django.urls import reverse, reverse_lazy
 from django.views import generic, View
@@ -92,10 +93,6 @@ class LogoutView(View):
         return redirect(to='login_view')
 
 
-class MainView(View):
-    pass
-
-
 class ManagerDeleteView(DeleteView):
     model = User
     success_url = reverse_lazy('user-list')
@@ -136,7 +133,7 @@ class SquadListView(View):
     def get(self, request, pk):
         club = Clubs.objects.get(pk=pk)
         all_players = Players.objects.filter(club=club)
-        player = all_players.order_by('position')
+        player = all_players.order_by('position', 'name')
         goals = Goals.objects.filter(player=player)
         assist = Assists.objects.filter(player=player)
         yellow_cards = YellowCards.objects.filter(player=player)
@@ -169,6 +166,7 @@ class PlayerDetailView(View):
         appearance = FirstEleven.objects.filter(player=player)
         from_the_bench = BenchPlayers.objects.filter(player=player)
         motm = ManOfTheMatch.objects.filter(player=player)
+        #  shirt_num = PlayerShirtNumber.objects.filter(player__pk__in=player)
 
         ctx = {
             'player': player,
@@ -179,6 +177,7 @@ class PlayerDetailView(View):
             'appearance': appearance,
             'bench': from_the_bench,
             'motm': motm,
+            #  'shirt': shirt_num,
         }
         return render(request, 'main/player_view.html', ctx)
 
@@ -307,5 +306,65 @@ class InboxDetailView(View):
         return render(request, 'main/inbox_detail.html', ctx)
 
 
+class MessageDeleteView(DeleteView):
+    model = Message
+    success_url = reverse_lazy('inbox-list')
+
+
+class PlayersShirtNumberUpdateView(View):
+
+    def get(self, request, pk):
+        club = Clubs.objects.get(pk=pk)
+        all_players = Players.objects.filter(club=club)
+        player = all_players.order_by('position', 'name')
+        form = PlayersShirtNumberForm(player)
+        form.fields["player"].queryset = player
+        #  shirt_num = PlayerShirtNumber.objects.filter(player__in=player)
+        ctx = {'form': form,
+               'player_list': player,
+               'club': club,
+               #  'shirt': shirt_num,
+               }
+        return render(request, 'main/player_shirt_number_update.html', ctx)
+
+    def post(self, request, pk):
+
+        club = Clubs.objects.get(pk=pk)
+        all_players = Players.objects.filter(club=club)
+        player = all_players.order_by('position', 'name')
+        form = PlayersShirtNumberForm(event=player, data=request.POST)
+        form.fields["player"].queryset = player
+        ctx = {'form': form,
+               'player_list': player,
+               'club': club,
+               }
+        if form.is_valid():
+            player = request.POST['player']
+            play = Players.objects.filter(id=player)
+            play.update(shirt_number=form.cleaned_data['number'],)
+            obj = '/clubs/{}/squad'.format(pk)
+            return redirect(to=obj)
+        return render(request, 'main/player_shirt_number_update.html', ctx)
+
+
 class MatchView(View):
+    def get(self, request, pk):
+        match = Matches.objects.get(pk=pk)
+        ctx = {
+            'match': match,
+        }
+        return render(request, 'main/match_view.html', ctx)
+
+
+class MatchUpdateView(UpdateView):
+    model = Matches
+    fields = ['home_team_score', 'away_team_score', 'possession_home_team', 'possession_away_team',
+              'shots_on_target_home_team', 'shots_on_target_away_team', 'all_shots_home_team', 'all_shots_away_team',
+              'corners_home_team', 'corners_away_team', 'offsides_home_team', 'offsides_away_team',
+              'yellow_cards_home_team', 'yellow_cards_away_team', 'red_cards_home_team', 'red_cards_away_team',
+              'fouls_conceded_home_team', 'fouls_conceded_away_team']
+    template_name_suffix = '_update'
+
+
+class MainView(View):
     pass

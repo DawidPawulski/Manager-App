@@ -1,0 +1,67 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Match
+{% endblock %}
+
+{% block content %}
+
+    <h3>Match statistics</h3>
+
+    <table border="1px" style="text-align: center">
+        <tr>
+            <th>{{ match.home_team.get }}</th>
+            <th>Stats</th>
+            <th>{{ match.away_team.get }}</th>
+        </tr>
+        <tr>
+            <td>{{ match.home_team_score }}</td>
+            <td>Goals</td>
+            <td>{{ match.away_team_score }}</td>
+        </tr>
+        <tr>
+            <td>{{ match.possession_home_team }}%</td>
+            <td>Possession</td>
+            <td>{{ match.possession_away_team }}%</td>
+        </tr>
+        <tr>
+            <td>{{ match.shots_on_target_home_team }}</td>
+            <td>Shots on target</td>
+            <td>{{ match.shots_on_target_away_team }}</td>
+        </tr>
+        <tr>
+            <td>{{ match.all_shots_home_team }}</td>
+            <td>All shots</td>
+            <td>{{ match.all_shots_away_team }}</td>
+        </tr>
+        <tr>
+            <td>{{ match.corners_home_team }}</td>
+            <td>Corners</td>
+            <td>{{ match.corners_away_team }}</td>
+        </tr>
+        <tr>
+            <td>{{ match.offsides_home_team }}</td>
+            <td>Offsides</td>
+            <td>{{ match.offsides_away_team }}</td>
+        </tr>
+        <tr>
+            <td>{{ match.fouls_conceded_home_team }}</td>
+            <td>Fouls</td>
+            <td>{{ match.fouls_conceded_away_team }}</td>
+        </tr>
+        <tr>
+            <td>{{ match.yellow_cards_home_team }}</td>
+            <td>Yellow Cards</td>
+            <td>{{ match.yellow_cards_away_team }}</td>
+        </tr>
+        <tr>
+            <td>{{ match.red_cards_home_team }}</td>
+            <td>Red Cards</td>
+            <td>{{ match.red_cards_away_team }}</td>
+        </tr>
+    </table>
+    <br><br>
+<a href="{% url 'match-edit-view' pk=match.pk %}">Edit match stats</a>
+    <br><br>
+
+{% endblock %}

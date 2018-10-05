@@ -1,0 +1,27 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+    Shirt numbers
+{% endblock %}
+
+{% block content %}
+    <h3>Edit player shirts: {{ club.club_name }}</h3>
+    <ul>
+        {% for man in player_list %}
+            <li>
+            Shirt number: #{{ man.shirt_number|default:'-' }}
+                <form action="" method="post">
+        {% csrf_token %}
+            {{ form }}
+        <input type="submit" value="Edit">
+        </form>
+                <a href="{% url 'player-details' pk=man.pk %}">{{ man.name }}</a>
+                Position: {{ man.get_position_display }}<br>
+            </li>
+
+        {% empty %}
+            No players in the club!
+
+        {% endfor %}
+    </ul>
+{% endblock %}

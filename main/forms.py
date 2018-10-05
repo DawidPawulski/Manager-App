@@ -30,8 +30,7 @@ class UserForm(forms.Form):
     first_name = forms.CharField()
     last_name = forms.CharField()
     email = forms.EmailField()
-    club = forms.ModelChoiceField(queryset=Clubs.objects.all(),
-                                   required=True)
+    club = forms.ModelChoiceField(queryset=Clubs.objects.all(), required=True)
 
     def clean_login(self):
         from django.contrib.auth.models import User
@@ -77,3 +76,18 @@ class MessageForm(forms.ModelForm):
     class Meta:
         model = Message
         exclude = ['date_sent', 'sender']
+
+
+class PlayersShirtNumberForm(forms.Form):
+    # class Meta:
+    #     model = PlayerShirtNumber
+    #     fields = forms.ALL_FIELDS
+    # player = forms.ModelChoiceField(queryset=Players.objects.all(), required=True)
+    # player = forms.ModelChoiceField(queryset=Players.objects.none())
+    number = forms.IntegerField()
+
+    def __init__(self, event, *args, **kwargs):
+        super(PlayersShirtNumberForm, self).__init__(*args, **kwargs)
+        self.fields['player'] = forms.ModelChoiceField(queryset=Players.objects.filter(pk=event))
+
+
