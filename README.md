@@ -1,5 +1,6 @@
 # Manager-App
 The goal of this project was to create a simple Web project that helps football managers run their clubs.
+The code is mainly backend code.
 
 ## Features
 - cover all the **CRUD** operations (create/retrieve/update/delete) for user,
@@ -17,5 +18,5 @@ The goal of this project was to create a simple Web project that helps football 
 
 ## Specification
 Project was written in Django (Python).
-
+Project 
 Data are stored in PostgreSQL.
